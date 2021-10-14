@@ -1,0 +1,19 @@
+@import "../../Abstracts/Variables/Variables.scss";
+
+.background {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: $white;
+
+    color: $primary-text;
+    font-size: 3rem;
+
+    width: 100vw;
+    height: 100vh;
+
+    form {
+        z-index: 10;
+    }
+}
