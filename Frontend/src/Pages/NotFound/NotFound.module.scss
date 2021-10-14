@@ -1,5 +1,25 @@
+@import "../../Abstracts/Variables/Variables.scss";
+
 .background {
-  background-color: blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+  color: $primary-text;
+
+  background-color: $white;
   width: 100vw;
   height: 100vh;
+
+  h2 {
+    font-size: 4rem;
+    margin: 10px;
+  }
+  p {
+    font-size: 3rem;
+    margin: 10px;
+  }
 }

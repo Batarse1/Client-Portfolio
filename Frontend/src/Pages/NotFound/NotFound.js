@@ -1,11 +1,12 @@
-import styles from './NotFound.module.scss';
+import styles from "./NotFound.module.scss";
 
-function NotFound(){
-    return(
-        <div className={styles.background}>
-            <h1>Not Found</h1>
-        </div>
-    );
+function NotFound() {
+  return (
+    <main className={styles.background}>
+      <h2>Error 404</h2>
+      <p>Lo sentimos, pero el recurso que busca no existe.</p>
+    </main>
+  );
 }
 
 export default NotFound;

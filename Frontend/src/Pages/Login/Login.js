@@ -1,10 +1,19 @@
 import styles from './Login.module.scss';
 
-function Login(){
-    return(
-        <div className={styles.background}>
-            <h1>Hello world!</h1>
-        </div>
+import LoginForm from '../../Components/LoginForm/LoginForm';
+
+import { ReactComponent as WaveImg } from '../../Assets/Svg/wave.svg';
+import { ReactComponent as LoginImg } from '../../Assets/Svg/login.svg';
+
+function Login() {
+    return (
+        <>
+            <WaveImg className={styles.wave} />
+            <main className={styles.background}>
+                <div className={`${styles.container} ${styles.img}`}><LoginImg /></div>
+                <div className={`${styles.container} ${styles.login}`}><LoginForm /></div>
+            </main>
+        </>
     );
 }
 
