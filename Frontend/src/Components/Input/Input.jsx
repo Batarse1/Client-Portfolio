@@ -4,7 +4,7 @@ function Input({ title, type, id, name }) {
 
     return (
         <div className={styles.background}>
-            <label for={id}>{title}</label>
+            <label htmlFor={id}>{title}</label>
             <input type={type} id={id} name={name} />
         </div>
     );

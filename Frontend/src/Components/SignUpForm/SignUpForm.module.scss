@@ -1,15 +1,37 @@
+@import "../../Abstracts/Variables/Variables.scss";
+
 .background {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+
+  padding: 48px;
+
+  border: 1px solid $primary-text;
+  border-radius: 10px;
+
+  color: $primary-text;
+  background-color: $white;
+
+  .inputs {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 48px;
+    gap: 24px;
 
-    .inputs{
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-    
-        width: 100%;
-    }
+    width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .background {
+    border: none;
+    padding: 24px;
+    background-color: transparent;
+  }
+}
+@media (max-width: 640px) {
+  .background {
+    padding: 12px;
+  }
 }

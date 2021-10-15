@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './Login.module.scss';
 
 import Wave from '../../Components/Wave/Wave';
