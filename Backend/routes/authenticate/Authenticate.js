@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 
 const Authenticate = (req, res, next) => {
-    console.log('executing middleware');
     const token = req.header('Authorize');
 
     if (!token) {

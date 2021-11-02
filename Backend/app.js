@@ -16,9 +16,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var userRoutes = require('./routes/user/UserRoutes');
+const userRoutes = require('./routes/user/UserRoutes');
+const customerRoutes = require('./routes/customer/CustomerRoutes');
+const policyRoutes = require('./routes/policy/PolicyRoutes');
+const insuredRoutes = require('./routes/insured/InsuredRoutes');
 
 app.use('/users', userRoutes);
+app.use('/customers', customerRoutes);
+app.use('/policies', policyRoutes);
+app.use('/insured', insuredRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { signInLimiter, loginLimiter ,getUserLimiter } = require('../../controllers/user/Limiter');
+const { signInLimiter, loginLimiter ,getUserLimiter } = require('./Limiter');
 const authenticate = require('../authenticate/Authenticate');
 const { signIn, login, getUser } = require('../../controllers/user/UserController');
 

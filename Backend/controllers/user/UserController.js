@@ -24,7 +24,7 @@ var UserController = {
                 username: req.body.username,
                 hash: hashedPassword
             });
-            
+
             await newUser.save();
 
             return res.status(201).json({
@@ -35,7 +35,7 @@ var UserController = {
         catch (error) {
             return res.status(500).json({
                 error: error.details != null ? error.details[0].message : error,
-                message: 'not create'
+                message: 'not created'
             });
         }
     },
@@ -43,45 +43,53 @@ var UserController = {
         try {
             await loginValidator(req.body);
 
-            const user = await User.findOne({username: req.body.username});
+            const user = await User.findOne({ username: req.body.username });
 
-            if(!user){
+            if (!user) {
                 throw {
                     error: true,
-                    message: 'username not found'
-                }
+                    message: 'user not found'
+                };
             }
 
             var logged = await bcrypt.compare(req.body.password, user.hash);
 
-            if(!logged){
+            if (!logged) {
                 throw {
                     error: true,
                     message: 'wrong password'
-                }
+                };
             }
 
-            const token = jwt.sign({_id: user._id}, process.env.TOKEN_KEY);
+            const token = jwt.sign({ _id: user._id }, process.env.TOKEN_KEY);
 
             return res.status(200).json({
                 error: false,
                 token: token
-            })
+            });
         }
         catch (error) {
             return res.status(500).json({
                 error: error.details != null ? error.details[0].message : error.message,
-                message: 'something went wro'
+                message: 'something went wrong'
             });
         }
     },
     getUser: async (req, res) => {
-        const user = await User.findOne({_id: req.user._id});
+        try {
+            const user = await User.findOne({ _id: req.user._id });
 
-        return res.status(200).json({
-            error: false,
-            user
-        })
+            return res.status(200).json({
+                error: false,
+                user
+            });
+        }
+        catch (error) {
+            return res.status(500).json({
+                error: error.details != null ? error.details[0].message : error,
+                message: 'not found'
+            });
+        }
     }
 };
 
