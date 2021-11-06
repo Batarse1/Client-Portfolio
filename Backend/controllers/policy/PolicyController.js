@@ -6,7 +6,12 @@ const { addPolicyValidator, updatePolicyValidator, deletePolicyValidator } = req
 var PolicyController = {
     getAllPoliciesOfCustomer: async (req, res) => {
         try {
-            const customer = await Customer.findOne({ _id: req.body.customerId });
+            const customer = await Customer.findOne({
+                $and: [
+                    { _id: req.body.customerId },
+                    { userId: req.user._id }
+                ]
+            });
 
             if (!customer) {
                 throw {
@@ -32,8 +37,8 @@ var PolicyController = {
             });
         }
         catch (error) {
-            return res.status(500).json({
-                error: error.details != null ? error.details[0].message : error,
+            return res.status(404).json({
+                error: error.message ?? error,
                 message: 'not found'
             });
         }
@@ -42,7 +47,12 @@ var PolicyController = {
         try {
             await addPolicyValidator(req.body);
 
-            const customer = await Customer.findOne({ _id: req.body.customerId });
+            const customer = await Customer.findOne({
+                $and: [
+                    { _id: req.body.customerId },
+                    { userId: req.user._id }
+                ]
+            });
 
             if (!customer) {
                 throw {
@@ -74,8 +84,8 @@ var PolicyController = {
             });
         }
         catch (error) {
-            return res.status(500).json({
-                error: error.details != null ? error.details[0].message : error,
+            return res.status(400).json({
+                error: error.message ?? error,
                 message: 'not added'
             });
         }
@@ -84,13 +94,27 @@ var PolicyController = {
         try {
             await updatePolicyValidator(req.body);
 
-            var currentPolicy = await Policy.findOne({ _id: req.body.id });
+            let currentPolicy = await Policy.findOne({ _id: req.body.id });
 
             if (currentPolicy == null){
                 throw {
                     error: true,
                     message: 'policy not found'
                 }
+            }
+
+            const customer = await Customer.findOne({
+                $and: [
+                    { _id: currentPolicy.customerId },
+                    { userId: req.user._id }
+                ]
+            });
+
+            if (!customer) {
+                throw {
+                    error: true,
+                    message: 'policy not found'
+                };
             }
 
             currentPolicy = {
@@ -121,8 +145,8 @@ var PolicyController = {
             });            
         }
         catch (error) {
-            return res.status(500).json({
-                error: error.details != null ? error.details[0].message : error,
+            return res.status(400).json({
+                error: error.message ?? error,
                 message: 'not updated'
             });
         }
@@ -140,6 +164,20 @@ var PolicyController = {
                 }
             }
 
+            const customer = await Customer.findOne({
+                $and: [
+                    { _id: currentPolicy.customerId },
+                    { userId: req.user._id }
+                ]
+            });
+
+            if (!customer) {
+                throw {
+                    error: true,
+                    message: 'policy not found'
+                };
+            }
+
             await Policy.findOneAndDelete({ _id: req.body.id }, currentPolicy);
 
             return res.status(200).json({
@@ -148,8 +186,8 @@ var PolicyController = {
             });
         }
         catch (error) {
-            return res.status(500).json({
-                error: error.details != null ? error.details[0].message : error,
+            return res.status(400).json({
+                error: error.message ?? error,
                 message: 'not deleted'
             });
         }

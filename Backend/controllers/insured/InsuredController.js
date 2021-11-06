@@ -19,8 +19,6 @@ var InsuredController = {
 
             const { page = 1, limit = 10 } = req.query;
 
-            console.log(req.body.policyId);
-
             const allInsured = await Insured.find({ policyId: [req.body.policyId] })
                 .limit()
                 .skip((page - 1) * limit)

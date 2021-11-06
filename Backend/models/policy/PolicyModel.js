@@ -33,7 +33,7 @@ var policiesSchema = Schema({
         trim: true
     },
     paymentFrequency: {
-        type: 'string',
+        type: 'Number',
         require: true,
         trim: true
     },

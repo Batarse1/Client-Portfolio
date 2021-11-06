@@ -1,12 +1,24 @@
 const Customer = require('../../models/customer/CustomerModel');
 const User = require('../../models/user/UserModel');
 
-const { addCustomerValidator, updateCustomerValidator, deleteCustomerValidator, getAllCustomersOfInsuranceCarrier } = require('./Validator');
+const { addCustomerValidator, updateCustomerValidator, deleteCustomerValidator, getAllCustomersOfInsuranceCarrierValidator } = require('./Validator');
 
 var CustomerController = {
     getCustomer: async (req, res) => {
         try {
-            const currentCustomer = await Customer.findOne({ _id: req.body.id });
+            const currentCustomer = await Customer.findOne({
+                $and: [
+                    { _id: req.body.id },
+                    { userId: req.user._id }
+                ]
+            });
+
+            if (!currentCustomer) {
+                throw {
+                    error: true,
+                    message: 'customer not found'
+                };
+            }
 
             return res.status(200).json({
                 error: false,
@@ -14,8 +26,8 @@ var CustomerController = {
             });
         }
         catch (error) {
-            return res.status(500).json({
-                error: error.details != null ? error.details[0].message : error,
+            return res.status(404).json({
+                error: error.message ?? error,
                 message: 'not found'
             });
         }
@@ -48,15 +60,15 @@ var CustomerController = {
             });
         }
         catch (error) {
-            return res.status(500).json({
-                error: error.details != null ? error.details[0].message : error,
+            return res.status(404).json({
+                error: error.message ?? error,
                 message: 'not found'
             });
         }
     },
     getAllCustomersOfInsuranceCarrier: async (req, res) => {
         try {
-            getAllCustomersOfInsuranceCarrier(req.body);
+            await getAllCustomersOfInsuranceCarrierValidator(req.body);
 
             const user = await User.findOne({ _id: req.user._id });
 
@@ -94,9 +106,9 @@ var CustomerController = {
             });
         }
         catch (error) {
-            return res.status(500).json({
-                error: error.details != null ? error.details[0].message : error,
-                message: 'not added'
+            return res.status(404).json({
+                error: error.message ?? error,
+                message: 'not found'
             });
         }
     },
@@ -104,9 +116,9 @@ var CustomerController = {
         try {
             await addCustomerValidator(req.body);
 
-            const user = await User.findOne({ _id: req.user._id });
+            const currentUser = await User.findOne({ _id: req.user._id });
 
-            if (!user) {
+            if (!currentUser) {
                 throw {
                     error: true,
                     message: 'user not found'
@@ -123,7 +135,7 @@ var CustomerController = {
                 insuranceCarrier: req.body.insuranceCarrier,
                 address: req.body.address,
                 type: req.body.type,
-                userId: user.id
+                userId: currentUser.id
             });
 
             await newCustomer.save();
@@ -134,8 +146,8 @@ var CustomerController = {
             });
         }
         catch (error) {
-            return res.status(500).json({
-                error: error.details != null ? error.details[0].message : error,
+            return res.status(400).json({
+                error: error.message ?? error,
                 message: 'not added'
             });
         }
@@ -144,9 +156,14 @@ var CustomerController = {
         try {
             await updateCustomerValidator(req.body);
 
-            var currentCustomer = await Customer.findOne({ _id: req.body.id });
+            let currentCustomer = await Customer.findOne({
+                $and: [
+                    { _id: req.body.id },
+                    { userId: req.user._id }
+                ]
+            });
 
-            if (currentCustomer == null) {
+            if (!currentCustomer) {
                 throw {
                     error: true,
                     message: 'customer not found'
@@ -164,16 +181,16 @@ var CustomerController = {
                 userId: currentCustomer.userId
             };
 
-            if (req.body.nit){
+            if (req.body.nit) {
                 currentCustomer = {
                     nit: req.body.nit
-                }
+                };
             }
 
-            if (req.body.dui){
+            if (req.body.dui) {
                 currentCustomer = {
                     nit: req.body.dui
-                }
+                };
             }
 
             await Customer.findOneAndUpdate({ _id: req.body.id }, currentCustomer);
@@ -184,8 +201,8 @@ var CustomerController = {
             });
         }
         catch (error) {
-            return res.status(500).json({
-                error: error.details != null ? error.details[0].message : error,
+            return res.status(400).json({
+                error: error.message ?? error,
                 message: 'not updated'
             });
         }
@@ -194,8 +211,13 @@ var CustomerController = {
         try {
             await deleteCustomerValidator(req.body);
 
-            const currentCustomer = await Customer.findOne({ _id: req.body.id });
-
+            const currentCustomer = await Customer.findOne({
+                $and: [
+                    { _id: req.body.id },
+                    { userId: req.user._id }
+                ]
+            });
+            
             if (!currentCustomer) {
                 throw {
                     error: true,
@@ -211,8 +233,8 @@ var CustomerController = {
             });
         }
         catch (error) {
-            return res.status(500).json({
-                error: error.details != null ? error.details[0].message : error,
+            return res.status(404).json({
+                error: error.message ?? error,
                 message: 'not deleted'
             });
         }

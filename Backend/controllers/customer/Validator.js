@@ -1,9 +1,12 @@
 const joi = require('joi');
 
 const Validator = {
-    getAllCustomersOfInsuranceCarrier: data => {
+    getAllCustomersOfInsuranceCarrierValidator: data => {
         const validateSchema = joi.object({
             insuranceCarrier: joi.string()
+                .min(2)
+                .max(255)
+                .pattern(new RegExp(process.env.ALPHANUM_VALIDATOR))
                 .required(),
         });
 
@@ -12,24 +15,37 @@ const Validator = {
     addCustomerValidator: data => {
         const validateSchema = joi.object({
             nit: joi.string()
+                .min(17)
+                .max(17)
+                .pattern(new RegExp(process.env.NIT_VALIDATOR))
                 .required(),
-            dui: joi.string(),
+            dui: joi.string()
+                .min(10)
+                .max(10)
+                .pattern(new RegExp(process.env.DUI_VALIDATOR)),
             name: joi.string()
+                .min(2)
+                .max(100)
+                .pattern(new RegExp(process.env.ALPHABET_VALIDATOR))
                 .required(),
             dob: joi.date()
                 .required(),
             phone: joi.array()
-                .items(joi.string()),
+                .items(joi.string().pattern(new RegExp(process.env.PHONE_VALIDATOR))),
             email: joi.array()
-                .items(joi.string()),
+                .items(joi.string().email()),
             insuranceCarrier: joi.array()
-                .items(joi.string())
+                .items(joi.string().min(2).max(255).pattern(new RegExp(process.env.ALPHANUM_VALIDATOR)))
                 .required(),
-            address: joi.string(),
+            address: joi.string()
+                .min(2)
+                .max(255)
+                .pattern(new RegExp(process.env.ALPHANUM_VALIDATOR)),
             type: joi.string()
-                .required(),
-            userId: joi.string()
-                .required(),
+                .min(15)
+                .max(16)
+                .pattern(new RegExp(process.env.ALPHABET_VALIDATOR))
+                .required()
         });
 
         return validateSchema.validateAsync(data);
@@ -37,20 +53,37 @@ const Validator = {
     updateCustomerValidator: data => {
         const validateSchema = joi.object({
             id: joi.string()
+                .pattern(new RegExp(process.env.ID_VALIDATOR))
                 .required(),
-            nit: joi.string(),
-            dui: joi.string(),
-            name: joi.string(),
+            nit: joi.string()
+                .min(17)
+                .max(17)
+                .pattern(new RegExp(process.env.NIT_VALIDATOR)),
+            dui: joi.string()
+                .min(10)
+                .max(10)
+                .pattern(new RegExp(process.env.DUI_VALIDATOR)),
+            name: joi.string()
+                .min(2)
+                .max(100)
+                .pattern(new RegExp(process.env.ALPHABET_VALIDATOR)),
             dob: joi.date(),
             phone: joi.array()
-                .items(joi.string()),
+                .items(joi.string().pattern(new RegExp(process.env.PHONE_VALIDATOR))),
             email: joi.array()
-                .items(joi.string()),
+                .items(joi.string().email()),
             insuranceCarrier: joi.array()
-                .items(joi.string()),
-            address: joi.string(),
-            type: joi.string(),
+                .items(joi.string().min(2).max(255).pattern(new RegExp(process.env.ALPHANUM_VALIDATOR))),
+            address: joi.string()
+                .min(2)
+                .max(255)
+                .pattern(new RegExp(process.env.ALPHANUM_VALIDATOR)),
+            type: joi.string()
+                .min(15)
+                .max(16)
+                .pattern(new RegExp(process.env.ALPHABET_VALIDATOR)),
             userId: joi.string()
+                .pattern(new RegExp(process.env.ID_VALIDATOR))
         });
 
         return validateSchema.validateAsync(data);
@@ -58,6 +91,7 @@ const Validator = {
     deleteCustomerValidator: data => {
         const validateSchema = joi.object({
             id: joi.string()
+                .pattern(new RegExp(process.env.ID_VALIDATOR))
                 .required()
         });
 

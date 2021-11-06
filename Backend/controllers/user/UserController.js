@@ -33,8 +33,8 @@ var UserController = {
             });
         }
         catch (error) {
-            return res.status(500).json({
-                error: error.details != null ? error.details[0].message : error,
+            return res.status(400).json({
+                error: error.message ?? error,
                 message: 'not created'
             });
         }
@@ -69,9 +69,9 @@ var UserController = {
             });
         }
         catch (error) {
-            return res.status(500).json({
-                error: error.details != null ? error.details[0].message : error.message,
-                message: 'something went wrong'
+            return res.status(400).json({
+                error: error.message ?? error,
+                message: 'not created'
             });
         }
     },
@@ -85,7 +85,7 @@ var UserController = {
             });
         }
         catch (error) {
-            return res.status(500).json({
+            return res.status(404).json({
                 error: error.details != null ? error.details[0].message : error,
                 message: 'not found'
             });

@@ -16,7 +16,7 @@ const Authenticate = (req, res, next) => {
         next();
     }
     catch {
-        return res.status(400).json({
+        return res.status(401).json({
             error: true,
             message: 'Invalid token'
         });
