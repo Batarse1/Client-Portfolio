@@ -18,14 +18,42 @@ function useProvideAuth() {
     const [user, setUser] = useState(null);
     const [userLocalStorage, setUserLocalStorage] = useLocalStorage('user', null);
 
-    const signUp = async (username, password) => {
+    const logIn = async (username, password) => {
         try {
-            const response = await fetch(`${API_URL}/users/signIn`, {
+            const response = await fetch(`${API_URL}/users/logIn`, {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({username, password})
+            });
+            
+            const data = await response.json();
+
+            setUser({token: data.token})
+            setUserLocalStorage({token: data.token})
+
+            return {
+                error: false,
+                message: 'Success'
+            };
+        }
+        catch (error) {
+            return {
+                error: true,
+                message: "Can't connect with server"
+            };
+        }
+    };
+
+    const signUp = async (username, password, confirmPassword) => {
+        try {
+            const response = await fetch(`${API_URL}/users/signUp`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ username, password, confirmPassword })
             });
 
             const data = await response.json();
@@ -46,6 +74,7 @@ function useProvideAuth() {
 
     return {
         user,
+        logIn,
         signUp
     };
 }

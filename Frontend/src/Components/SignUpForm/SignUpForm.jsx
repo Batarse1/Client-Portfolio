@@ -5,7 +5,7 @@ import styles from './SignUpForm.module.scss';
 
 import CircleImg from '../CircleImg/CircleImg';
 import Input from '../Input/Input';
-import Button from '../Button/Button';
+import Submit from '../Submit/Submit';
 
 import Logo from '../../Assets/Img/logo.png';
 
@@ -24,36 +24,36 @@ function SignUpForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await auth.signUp(username, password);
+        const response = await auth.signUp(username, password, confirmPassword);
 
         setMessage('');
 
         if (response.error) {
-            setMessage('Exito');
-        }
-        else {
             setMessage('Error en la petición');
         }
+        else {
+            setMessage('El usuario se ha creado con exito');
+        }
 
-        console.log(message);
+        console.log(message)
     };
 
     const white = '#FFFFFF';
     const borderColor = '#707070';
-    const buttonPadding = '10px';
-    const buttonRadius = '25px';
-    const buttonWidth = '300px';
+    const submitPadding = '10px';
+    const submitRadius = '25px';
+    const submitWidth = '300px';
 
     return (
         <form className={styles.background} onSubmit={handleSubmit}>
             <CircleImg ImgSrc={Logo} imgHeight='150px' imgWidth='150px' imgRadius='75px' />
-            <h2>Bienvenido</h2>
+            <h2>Registrar</h2>
             <div className={styles.inputs}>
-                <Input title='Usuario' type='text' id='text' name="text" onChange={(e) => { handleOnChange(e, setUsername); }} required />
-                <Input title='Contraseña' type='password' id='password' name="password" onChange={(e) => { handleOnChange(e, setPassword); }} required />
-                <Input title='Confirmar contraseña' type='password' id='confirmPassword' name="confirmPassword" onChange={(e) => { handleOnChange(e, setConfirmPassword); }} required />
+                <Input title='Usuario' type='text' id='signUpText' name="text" onChange={(e) => { handleOnChange(e, setUsername); }} required />
+                <Input title='Contraseña' type='password' id='signUpPassword' name="password" onChange={(e) => { handleOnChange(e, setPassword); }} required autoComplete="off"/>
+                <Input title='Confirmar contraseña' type='password' id='signUpConfirmPassword' name="confirmPassword" onChange={(e) => { handleOnChange(e, setConfirmPassword); }} required autoComplete="off" />
             </div>
-            <Button content='Registrarse' bgColor={white} borderColor={borderColor} padding={buttonPadding} radius={buttonRadius} buttonWidth={buttonWidth} route={'/signup'} />
+            <Submit value="registrarse" bgColor={white} borderColor={borderColor} padding={submitPadding} radius={submitRadius} submitWidth={submitWidth}/>
         </form>
     );
 }

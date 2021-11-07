@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styles from './Button.module.scss';
 
-function Button({ content, bgColor, borderColor, padding, radius, buttonWidth, route }) {
+function Button({ content, bgColor, borderColor, padding, radius, buttonWidth, route, ...rest }) {
     const buttonStyle = {
         backgroundColor: bgColor,
         border: '1px solid ' + borderColor,
@@ -17,7 +17,7 @@ function Button({ content, bgColor, borderColor, padding, radius, buttonWidth, r
         alignItems: 'center',
         textDecoration: 'none',
         cursor: 'pointer'
-    }
+    };
 
     return (
         <Link to={route} style={linkStyle}>

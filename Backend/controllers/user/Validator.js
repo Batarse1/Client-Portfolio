@@ -1,7 +1,7 @@
 const joi = require('joi');
 
 const Validator = {
-    signInValidator: data => {
+    signUpValidator: data => {
         const validateSchema = joi.object({
             username: joi.string()
                 .min(6)
@@ -9,6 +9,11 @@ const Validator = {
                 .alphanum()
                 .required(),
             password: joi.string()
+                .min(12)
+                .max(128)
+                .pattern(new RegExp(process.env.PASSWORD_VALIDATOR))
+                .required(),
+            confirmPassword: joi.string()
                 .min(12)
                 .max(128)
                 .pattern(new RegExp(process.env.PASSWORD_VALIDATOR))

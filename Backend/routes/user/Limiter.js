@@ -1,6 +1,6 @@
 const rateLimit = require('express-rate-limit');
 
-const signInLimiter = rateLimit({
+const signUpLimiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 60 minutes
     max: 5
 });
@@ -15,4 +15,4 @@ const getUserLimiter = rateLimit({
     max: 100
 });
 
-module.exports = {signInLimiter, loginLimiter, getUserLimiter};
+module.exports = {signUpLimiter, loginLimiter, getUserLimiter};

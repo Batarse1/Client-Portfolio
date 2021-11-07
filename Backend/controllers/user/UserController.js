@@ -3,19 +3,23 @@ const bcrypt = require('bcrypt');
 
 const User = require('../../models/user/UserModel');
 
-const { signInValidator, loginValidator } = require('./Validator');
+const { signUpValidator, loginValidator } = require('./Validator');
 
 var UserController = {
-    signIn: async (req, res) => {
+    signUp: async (req, res) => {
         try {
-            await signInValidator(req.body);
+            await signUpValidator(req.body);
 
             const notUnique = await User.find({
                 username: req.body.username
             });
 
             if (notUnique.length != 0) {
-                throw 'email or username already registered';
+                throw 'username already registered';
+            }
+
+            if (req.body.password !== req.body.confirmPassword){
+                throw "passwords don't match";
             }
 
             let hashedPassword = await bcrypt.hash(req.body.password, parseInt(process.env.SALT));
