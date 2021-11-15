@@ -15,4 +15,9 @@ const getUserLimiter = rateLimit({
     max: 100
 });
 
-module.exports = {signUpLimiter, loginLimiter, getUserLimiter};
+const isAuthenticatedLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100
+});
+
+module.exports = {signUpLimiter, loginLimiter, getUserLimiter, isAuthenticatedLimiter};

@@ -94,6 +94,29 @@ var UserController = {
                 message: 'not found'
             });
         }
+    },
+    isAuthenticated: async (req, res) => {
+        try {
+            const currentUser = await User.findOne({ _id: req.user._id });
+            
+            if (!currentUser) {
+                throw {
+                    error: true,
+                    message: 'user not found'
+                };
+            }
+
+            return res.status(201).json({
+                error: 'false',
+                message: 'authenticated'
+            });
+        }
+        catch (error){
+            return res.status(404).json({
+                error: 'true',
+                message: 'not found'
+            });
+        }
     }
 };
 

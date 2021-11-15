@@ -12,7 +12,6 @@ import Button from '../Button/Button';
 import Logo from '../../Assets/Img/logo.png';
 
 function LoginForm() {
-    const [message, setMessage] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -25,15 +24,7 @@ function LoginForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await auth.logIn(username, password);
-
-        setMessage('');
-
-        if (response.error) {
-            setMessage('Error en la petición');
-        }
-
-        console.log(message)
+        await auth.logIn(username, password);
     };
 
     const white = '#FFFFFF';
@@ -56,7 +47,7 @@ function LoginForm() {
                     <Input title='Contraseña' type='password' id='logInPassword' name="password" onChange={(e) => { handleOnChange(e, setPassword); }} required autoComplete="off" />
                 </div>
                 <div className={styles.buttons}>
-                <Submit value="Iniciar sesión" bgColor={white} borderColor={borderColor} padding={submitPadding} radius={submitRadius} submitWidth={submitWidth}/>
+                    <Submit value="Iniciar sesión" bgColor={white} borderColor={borderColor} padding={submitPadding} radius={submitRadius} submitWidth={submitWidth} />
                     <Button content='Registrarse' bgColor={white} borderColor={borderColor} padding={buttonPadding} radius={buttonRadius} buttonWidth={buttonWidth} route={'signup'} />
                 </div>
             </form>

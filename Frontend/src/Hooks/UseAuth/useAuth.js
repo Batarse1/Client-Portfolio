@@ -25,13 +25,17 @@ function useProvideAuth() {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify({username, password})
+                body: JSON.stringify({ username, password })
             });
-            
+
             const data = await response.json();
 
-            setUser({token: data.token})
-            setUserLocalStorage({token: data.token})
+            if(data.error){
+                throw new Error("Wrong credentials");
+            }
+
+            setUser({ token: data.token });
+            setUserLocalStorage({ token: data.token });
 
             return {
                 error: false,
@@ -68,13 +72,50 @@ function useProvideAuth() {
         }
     };
 
+    const isAuthenticated = async () => {
+        try {
+            const response = await fetch(`${API_URL}/users/IsAuthenticated`, {
+                method: 'GET',
+                headers: {
+                    'Authorize': user.token
+                }
+            });
+
+            const data = await response.json();
+
+            if(data.error){
+                throw new Error("Wrong credentials");
+            }
+            
+            return true;
+        }
+        catch (error) {
+            return false;
+        }
+    }
+
+    const signOut = () => {
+        try {
+            setUser(false);
+            setUserLocalStorage(false);
+        }
+        catch (error) {
+            return {
+                error: true,
+                message: "Can't signOut"
+            };
+        }
+    };
+
     useEffect(() => {
         setUser(userLocalStorage);
-    }, []);
+    }, [userLocalStorage]);
 
     return {
         user,
         logIn,
-        signUp
+        signUp,
+        signOut,
+        isAuthenticated
     };
 }
