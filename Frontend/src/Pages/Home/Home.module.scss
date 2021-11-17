@@ -1,12 +1,45 @@
+@import "../../Abstracts/Variables/Variables.scss";
+
 .home {
     display: flex;
     main {
-        background-color: blue;
-        width: 100%;
-        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 100px;
+        
+        width: 100%;
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: left;
+            flex-direction: column;
+            gap:24px;
+            
+            .global {
+                user-select: none;
+                cursor: pointer;
+
+                display: flex;
+                gap: 8px;
+
+                margin-right:auto;
+
+                font-family: "Montserrat", sans-serif;
+                font-weight: 500;
+                font-size: 28px;
+                color: $primary-text;
+            }
+    
+            .insuranceCompany {
+                background-color: white;
+                    
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                flex-wrap: wrap;
+                gap:24px;
+            }
+        }
     }
 }

@@ -5,8 +5,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    object-fit: contain;
 
+    padding: 10px;
+
+    border: 1px solid #707070;
     border-radius: 10px;
 
-    background-color: crimson;
+    background-color: white;
+
+    user-select: none;
+    cursor: pointer;
 }

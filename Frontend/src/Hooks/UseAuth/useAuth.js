@@ -17,7 +17,7 @@ export const useAuth = () => {
 function useProvideAuth() {
     const [user, setUser] = useState(null);
     const [userLocalStorage, setUserLocalStorage] = useLocalStorage('user', null);
-
+    
     const logIn = async (username, password) => {
         try {
             const response = await fetch(`${API_URL}/users/logIn`, {
@@ -72,28 +72,6 @@ function useProvideAuth() {
         }
     };
 
-    const isAuthenticated = async () => {
-        try {
-            const response = await fetch(`${API_URL}/users/IsAuthenticated`, {
-                method: 'GET',
-                headers: {
-                    'Authorize': user.token
-                }
-            });
-
-            const data = await response.json();
-
-            if(data.error){
-                throw new Error("Wrong credentials");
-            }
-            
-            return true;
-        }
-        catch (error) {
-            return false;
-        }
-    }
-
     const signOut = () => {
         try {
             setUser(false);
@@ -108,7 +86,29 @@ function useProvideAuth() {
     };
 
     useEffect(() => {
-        setUser(userLocalStorage);
+        const isAuthenticated = async () => {
+            try {
+                if(userLocalStorage.token){
+                    const response = await fetch(`${API_URL}/users/IsAuthenticated`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorize': userLocalStorage.token
+                        }
+                    });
+    
+                    if(response.ok){
+                        setUser(userLocalStorage);       
+                    }
+                }
+
+                return;
+            }
+            catch (error) {
+                return;
+            }
+        }
+
+        isAuthenticated();
     }, [userLocalStorage]);
 
     return {
@@ -116,6 +116,5 @@ function useProvideAuth() {
         logIn,
         signUp,
         signOut,
-        isAuthenticated
     };
 }

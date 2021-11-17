@@ -1,17 +1,14 @@
 import { useAuth } from "../../Hooks/UseAuth/useAuth";
-import { Route, Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-function PrivateRoute(props) {
-    const auth = useAuth();
+function PrivateRoute({ children }) {
+    let auth = useAuth();
 
-    return (
-        <Route exact path={props.path} render={
-            data => auth.user ?
-                (<props.component {...data}></props.component>) :
-                (<Redirect to={{ pathname: '/' }}></Redirect>)
-        }>
-        </Route>
-    );
+    if (!auth.user) {
+        return <Navigate to="/" />;
+    }
+
+    return children;
 }
 
 export default PrivateRoute;

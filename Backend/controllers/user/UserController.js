@@ -102,7 +102,7 @@ var UserController = {
             if (!currentUser) {
                 throw {
                     error: true,
-                    message: 'user not found'
+                    message: 'not found'
                 };
             }
 
@@ -112,7 +112,7 @@ var UserController = {
             });
         }
         catch (error){
-            return res.status(404).json({
+            return res.status(401).json({
                 error: 'true',
                 message: 'not found'
             });

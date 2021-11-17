@@ -1,33 +1,36 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../Hooks/UseAuth/useAuth';
+import { useInsuranceCarrier } from '../../Hooks/UseInsuranceCarrier/useInsuranceCarrier';
 import style from './Navbar.module.scss';
 
 const NavbarLink = ({ content, route }) => {
     return (
-        <Link to={route} className={style.navbarLink}>
+        <Link to={`/${route}`} className={style.navbarLink} >
             {content}
         </Link>
     );
 };
 
-function Navbar({ insuranceCarrier }) {
-    
-    const auth = useAuth();
+function Navbar() {
 
-    const handleOnClick = (event) => {
+    const auth = useAuth();
+    const insuranceCarrier = useInsuranceCarrier();
+
+    const onSignOutClick = (event) => {
         event.preventDefault();
+        insuranceCarrier.setInsuranceCarrier(false);
         auth.signOut();
-    }
+    };
 
     return (
         <nav>
             <ul>
-                <NavbarLink content="Inicio" route="Home" />
-                <NavbarLink content="Clientes" route="signup" />
-                <NavbarLink content="Reportería" route="signup" />
-                <li className={style.navbarLink} onClick={handleOnClick}>Cerrar sesión</li>
+                <NavbarLink content="Inicio" route="home" />
+                <NavbarLink content="Clientes" route="customers" />
+                <NavbarLink content="Reportería" route="report" />
+                <li className={style.navbarLink} onClick={onSignOutClick}>Cerrar sesión</li>
             </ul>
-            {insuranceCarrier ? <p>{insuranceCarrier}</p> : <p>Global</p>}
+            {insuranceCarrier.insuranceCarrier ? <p>{insuranceCarrier.insuranceCarrier}</p> : <p>Global</p>}
         </nav>
     );
 }

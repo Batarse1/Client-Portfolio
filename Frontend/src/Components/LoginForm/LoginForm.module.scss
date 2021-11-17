@@ -21,12 +21,20 @@
     font-family: "Open Sans", sans-serif;
   }
 
-  .inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-
+  .text {
     width: 100%;
+
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      width: 100%;
+    }
+
+    .message{
+      font-size: 16px;
+    }
   }
 
   .buttons {

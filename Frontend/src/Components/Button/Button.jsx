@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import styles from './Button.module.scss';
 
 function Button({ content, bgColor, borderColor, padding, radius, buttonWidth, route, ...rest }) {
@@ -20,11 +20,14 @@ function Button({ content, bgColor, borderColor, padding, radius, buttonWidth, r
     };
 
     return (
-        <Link to={route} style={linkStyle}>
-            <button style={buttonStyle} className={styles.button}>
-                {content}
-            </button>
-        </Link>
+        <>
+            <Link to={route} style={linkStyle}>
+                <button style={buttonStyle} className={styles.button}>
+                    {content}
+                </button>
+            </Link>
+            <Outlet />
+        </>
     );
 }
 
