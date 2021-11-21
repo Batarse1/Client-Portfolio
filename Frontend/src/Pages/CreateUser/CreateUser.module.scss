@@ -1,0 +1,89 @@
+@import "../../Abstracts/Variables/Variables.scss";
+
+.createUser {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    form {
+        width: 60%;
+
+        .firstPage {
+            padding: 48px;
+            width: 100%;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap:20px;
+
+            font-family: "Open Sans", sans-serif;
+            color: $primary-text;
+            text-align: left;
+        
+            border: 1px solid $primary-text;
+            border-radius: 10px;
+            .title {
+                align-self: center;
+                font-size: 24px;
+            }
+        }
+        .secondPage {
+            padding: 48px;
+            width: 100%;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap:10px;
+
+            font-family: "Open Sans", sans-serif;
+            color: $primary-text;
+            text-align: left;
+        
+            border: 1px solid $primary-text;
+            border-radius: 10px;
+            .plusButton {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                font-size: 24px;
+                svg {
+                    cursor: pointer;
+                    user-select: none;
+                }
+            }
+        }
+        .submit {
+            align-self: center;
+            margin-top: 24px;
+            width:90%;
+        }
+        .tabs {
+            align-self: center;
+
+            width: 100%;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+
+            li{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                width: 25px;
+                height: 25px;
+
+                cursor: pointer;
+            }
+        }
+    }
+}

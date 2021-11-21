@@ -1,14 +1,17 @@
 const Customer = require('../../models/customer/CustomerModel');
 const User = require('../../models/user/UserModel');
 
-const { addCustomerValidator, updateCustomerValidator, deleteCustomerValidator, getAllCustomersOfInsuranceCarrierValidator } = require('./Validator');
+const { getCustomerValidator, addCustomerValidator, updateCustomerValidator, deleteCustomerValidator, getAllCustomersOfInsuranceCarrierValidator } = require('./Validator');
 
 var CustomerController = {
     getCustomer: async (req, res) => {
         try {
+            const customerId = req.header('id');
+            await getCustomerValidator(customerId);
+
             const currentCustomer = await Customer.findOne({
                 $and: [
-                    { _id: req.body.id },
+                    { _id: customerId },
                     { userId: req.user._id }
                 ]
             });
@@ -68,7 +71,8 @@ var CustomerController = {
     },
     getAllCustomersOfInsuranceCarrier: async (req, res) => {
         try {
-            await getAllCustomersOfInsuranceCarrierValidator(req.body);
+            const insuranceCarrier = req.header('insuranceCarrier');
+            await getAllCustomersOfInsuranceCarrierValidator(insuranceCarrier);
 
             const user = await User.findOne({ _id: req.user._id });
 
@@ -84,7 +88,7 @@ var CustomerController = {
             const allCustomers = await Customer.find({
                 $and: [
                     { userId: user._id },
-                    { insuranceCarrier: [req.body.insuranceCarrier] }
+                    { insuranceCarrier: [insuranceCarrier] }
                 ]
             })
                 .limit()
@@ -94,7 +98,7 @@ var CustomerController = {
             const count = await Customer.countDocuments({
                 $and: [
                     { userId: user._id },
-                    { insuranceCarrier: [req.body.insuranceCarrier] }
+                    { insuranceCarrier: [insuranceCarrier] }
                 ]
             });
 
@@ -114,6 +118,7 @@ var CustomerController = {
     },
     addCustomer: async (req, res) => {
         try {
+            console.log(req.body);
             await addCustomerValidator(req.body);
 
             const currentUser = await User.findOne({ _id: req.user._id });

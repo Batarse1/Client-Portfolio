@@ -1,5 +1,6 @@
-import React, { createContext, useContext } from 'react';
+import React, { useEffect, createContext, useContext } from 'react';
 import { useLocalStorage } from '../UseLocalStorage/useLocalStorage';
+import { useAuth } from '../UseAuth/useAuth';
 
 const insuranceCarrierContext = createContext();
 
@@ -13,7 +14,14 @@ export const useInsuranceCarrier = () => {
 };
 
 const useProvideInsuranceCarrier = () => {
+    const auth = useAuth();
     const [insuranceCarrier, setInsuranceCarrier] = useLocalStorage('insuranceCarrier', null);
+
+    useEffect(()=>{
+        if(!auth.user){
+            setInsuranceCarrier(false);
+        }
+    },[auth.user, setInsuranceCarrier]);
 
     return {
         insuranceCarrier,

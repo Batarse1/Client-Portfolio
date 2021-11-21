@@ -1,0 +1,16 @@
+@import "../../Abstracts/Variables/Variables.scss";
+
+.itemList{
+    background-color: $white;
+    padding: 5px 20px;
+
+    color: $primary-text;
+    font-size: 24px;
+    font-weight: 300;
+    font-family: "Open Sans", sans-serif;
+}
+
+a{
+    display: block;
+    text-decoration: none;
+}

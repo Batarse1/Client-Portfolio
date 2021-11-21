@@ -2,17 +2,14 @@ import styles from './PageLayout.module.scss';
 
 import Navbar from '../../Components/Navbar/Navbar';
 
-import { ProvideInsuranceCarrier } from '../../Hooks/UseInsuranceCarrier/useInsuranceCarrier';
-
-const PageLayout = () => {
+const PageLayout = ({ children }) => {
     return (
-        <ProvideInsuranceCarrier>
-            <div className={styles.layout}>
-                <Navbar />
-                <main>
-                </main>
-            </div>
-        </ProvideInsuranceCarrier>
+        <div className={styles.layout}>
+            <Navbar />
+            <main>
+                {children}
+            </main>
+        </div>
     );
 };
 

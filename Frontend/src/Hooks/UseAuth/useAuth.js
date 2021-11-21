@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useState, useEffect, useCallback, useContext, createContext } from 'react';
 import { useLocalStorage } from '../UseLocalStorage/useLocalStorage';
 
 const API_URL = 'http://localhost:8080';
@@ -17,38 +17,45 @@ export const useAuth = () => {
 function useProvideAuth() {
     const [user, setUser] = useState(null);
     const [userLocalStorage, setUserLocalStorage] = useLocalStorage('user', null);
-    
-    const logIn = async (username, password) => {
-        try {
-            const response = await fetch(`${API_URL}/users/logIn`, {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify({ username, password })
-            });
 
-            const data = await response.json();
+    const logIn = useCallback(
+        (username, password) => {
+            const loginAsync = async () => {
+                try {
+                    const response = await fetch(`${API_URL}/users/logIn`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-type': 'application/json'
+                        },
+                        body: JSON.stringify({ username, password })
+                    });
 
-            if(data.error){
-                throw new Error("Wrong credentials");
-            }
+                    const data = await response.json();
 
-            setUser({ token: data.token });
-            setUserLocalStorage({ token: data.token });
+                    if (data.error) {
+                        throw new Error("Wrong credentials");
+                    }
 
-            return {
-                error: false,
-                message: 'Success'
+                    setUser({ token: data.token });
+                    setUserLocalStorage({ token: data.token });
+
+                    return {
+                        error: false,
+                        message: 'Success'
+                    };
+                }
+                catch (error) {
+                    return {
+                        error: true,
+                        message: "Can't connect with server"
+                    };
+                }
             };
-        }
-        catch (error) {
-            return {
-                error: true,
-                message: "Can't connect with server"
-            };
-        }
-    };
+
+            return loginAsync();
+        },
+        [setUserLocalStorage]
+    );
 
     const signUp = async (username, password, confirmPassword) => {
         try {
@@ -72,32 +79,37 @@ function useProvideAuth() {
         }
     };
 
-    const signOut = () => {
-        try {
-            setUser(false);
-            setUserLocalStorage(false);
-        }
-        catch (error) {
-            return {
-                error: true,
-                message: "Can't signOut"
-            };
-        }
-    };
+
+    const signOut = useCallback(
+        () => {
+            try {
+                setUser(false);
+                setUserLocalStorage(false);
+            }
+            catch (error) {
+                return {
+                    error: true,
+                    message: "Can't signOut"
+                };
+            }
+        },
+        [setUser, setUserLocalStorage],
+    );
 
     useEffect(() => {
         const isAuthenticated = async () => {
+            const token = userLocalStorage.token || localStorage.getItem('user')?.token;
             try {
-                if(userLocalStorage.token){
+                if (token) {
                     const response = await fetch(`${API_URL}/users/IsAuthenticated`, {
                         method: 'GET',
                         headers: {
-                            'Authorize': userLocalStorage.token
+                            'Authorize': token
                         }
                     });
-    
-                    if(response.ok){
-                        setUser(userLocalStorage);       
+
+                    if (response.ok) {
+                        setUser(userLocalStorage);
                     }
                 }
 
@@ -106,10 +118,11 @@ function useProvideAuth() {
             catch (error) {
                 return;
             }
-        }
+        };
 
         isAuthenticated();
     }, [userLocalStorage]);
+
 
     return {
         user,

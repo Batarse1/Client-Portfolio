@@ -1,0 +1,45 @@
+@import "../../Abstracts/Variables/Variables.scss";
+
+.personalInformation {
+    padding: 48px 0px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+
+    color: $primary-text;
+    background-color: $white;
+    text-decoration: none;
+    text-align: center;
+    font-family: "Open Sans", sans-serif; 
+    font-size: 20px;
+
+    .primaryInformation {
+        width:100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+    }
+
+    .primaryInformationContent{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 24px;
+    }
+
+    .title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 10px;                
+    }
+    
+    .subtitle{
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+}

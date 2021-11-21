@@ -5,9 +5,11 @@ import style from './Navbar.module.scss';
 
 const NavbarLink = ({ content, route }) => {
     return (
-        <Link to={`/${route}`} className={style.navbarLink} >
-            {content}
-        </Link>
+        <li>
+            <Link to={`/${route}`} className={style.navbarLink} >
+                {content}
+            </Link>
+        </li>
     );
 };
 
@@ -18,7 +20,6 @@ function Navbar() {
 
     const onSignOutClick = (event) => {
         event.preventDefault();
-        insuranceCarrier.setInsuranceCarrier(false);
         auth.signOut();
     };
 

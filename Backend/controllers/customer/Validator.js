@@ -1,14 +1,19 @@
 const joi = require('joi');
 
 const Validator = {
+    getCustomerValidator: data => {
+        const validateSchema = joi.string()
+            .pattern(new RegExp(process.env.ID_VALIDATOR))
+            .required();
+
+        return validateSchema.validateAsync(data);
+    },
     getAllCustomersOfInsuranceCarrierValidator: data => {
-        const validateSchema = joi.object({
-            insuranceCarrier: joi.string()
-                .min(2)
-                .max(255)
-                .pattern(new RegExp(process.env.ALPHANUM_VALIDATOR))
-                .required(),
-        });
+        const validateSchema = joi.string()
+            .min(2)
+            .max(255)
+            .pattern(new RegExp(process.env.ALPHANUM_VALIDATOR))
+            .required();
 
         return validateSchema.validateAsync(data);
     },

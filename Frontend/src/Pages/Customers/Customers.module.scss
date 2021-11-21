@@ -1,0 +1,64 @@
+@import "../../Abstracts/Variables/Variables.scss";
+
+.title {
+    background-color: $white;
+    padding: 20px;
+    text-align: center;
+    
+    color: $primary-text;
+    font-size: 28px;
+    font-weight: 400;
+    font-family: "Open Sans", sans-serif;
+}
+.firstLine{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: $primary-text;
+    font-size: 24px;
+    font-weight: 500;
+    font-family: "Open Sans", sans-serif;
+
+    padding: 5px 20px;
+    border-bottom:1px solid black;
+}
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-right: 20px;
+    border-bottom:1px solid black;
+    a:first-child {
+        flex: 1 1 auto;
+    }
+}
+.icon {
+    text-decoration: none;
+    color: $primary-text;
+    font-size: 24px;
+    font-weight: 500;
+    font-family: "Open Sans", sans-serif;
+
+    cursor: pointer;
+    user-select: none;
+}
+.icon:hover {
+    color: black;
+}
+.icon:active {
+    color: black;
+}
+.message {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    text-decoration: none;
+    color: $primary-text;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Open Sans", sans-serif;
+}
