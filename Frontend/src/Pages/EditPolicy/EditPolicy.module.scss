@@ -1,0 +1,67 @@
+@import "../../Abstracts/Variables/Variables.scss";
+
+.createPolicy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    form {
+        width: 60%;
+
+        .firstPage, .secondPage {
+            padding: 48px;
+            width: 100%;
+        
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap:20px;
+        
+            font-family: "Open Sans", sans-serif;
+            color: $primary-text;
+            text-align: left;
+        
+            border: 1px solid $primary-text;
+            border-radius: 10px;
+            .title {
+                align-self: center;
+                font-size: 24px;
+            }
+            .subtitle {
+                color: $primary-text;
+                font-size: 16px;
+                font-weight: 700;
+                font-family: "Open Sans", sans-serif;
+            }
+        }
+        .tabs {
+            align-self: center;
+
+            width: 100%;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+
+            li{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                width: 25px;
+                height: 25px;
+
+                cursor: pointer;
+            }
+        }
+        .submit {
+            align-self: center;
+            margin-top: 24px;
+            width:90%;
+        }
+    }
+}

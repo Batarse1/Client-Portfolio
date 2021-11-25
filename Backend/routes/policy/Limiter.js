@@ -5,6 +5,11 @@ const addPolicyLimiter = rateLimit({
     max: 100
 });
 
+const getPolicyLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100
+});
+
 const getAllPoliciesOfCustomerLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100
@@ -20,4 +25,4 @@ const deletePolicyLimiter = rateLimit({
     max: 100
 })
 
-module.exports = { addPolicyLimiter, getAllPoliciesOfCustomerLimiter, updatePolicyLimiter, deletePolicyLimiter };
+module.exports = { addPolicyLimiter, getPolicyLimiter, getAllPoliciesOfCustomerLimiter, updatePolicyLimiter, deletePolicyLimiter };

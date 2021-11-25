@@ -5,6 +5,11 @@ const addInsuredLimiter = rateLimit({
     max: 100
 });
 
+const getInsuredLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100
+})
+
 const getAllInsuredOfPolicyLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100
@@ -20,4 +25,4 @@ const deleteInsuredLimiter = rateLimit({
     max: 100
 })
 
-module.exports = { getAllInsuredOfPolicyLimiter, addInsuredLimiter, updateInsuredLimiter, deleteInsuredLimiter };
+module.exports = { getInsuredLimiter, getAllInsuredOfPolicyLimiter, addInsuredLimiter, updateInsuredLimiter, deleteInsuredLimiter };

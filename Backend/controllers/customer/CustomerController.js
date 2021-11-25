@@ -118,7 +118,6 @@ var CustomerController = {
     },
     addCustomer: async (req, res) => {
         try {
-            console.log(req.body);
             await addCustomerValidator(req.body);
 
             const currentUser = await User.findOne({ _id: req.user._id });

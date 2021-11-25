@@ -4,11 +4,53 @@ const Policy = require('../../models/policy/PolicyModel');
 const { addInsuredValidator, getAllInsuredOfPolicyValidator, updateInsuredValidator, deleteInsuredValidator } = require('./Validator');
 
 var InsuredController = {
+    getInsured: async (req, res) => {
+        try {
+            const insuredId = req.header('insuredId');
+            const policyId = req.header('policyId');
+
+            const policy = Policy.findOne({ _id: policyId });
+
+            if (!policy) {
+                throw {
+                    error: true,
+                    message: 'policy not found'
+                };
+            }
+
+            const currentInsured = await Insured.findOne({
+                $and: [
+                    { _id: insuredId },
+                    { policyId: [policyId] }
+                ]
+            });
+
+            if (!currentInsured) {
+                throw {
+                    error: true,
+                    message: 'insured not found'
+                };
+            }
+
+            return res.status(200).json({
+                error: false,
+                currentInsured
+            });
+        }
+        catch (error) {
+            return res.status(500).json({
+                error: error.details != null ? error.details[0].message : error.message,
+                message: 'not found'
+            });
+        }
+    },
     getAllInsuredOfPolicy: async (req, res) => {
         try {
-            await getAllInsuredOfPolicyValidator(req.body);
+            const policyId = req.header('policyId');
 
-            const policy = Policy.findOne({ _id: req.body.policyId });
+            await getAllInsuredOfPolicyValidator(policyId);
+
+            const policy = Policy.findOne({ _id: policyId });
 
             if (!policy) {
                 throw {
@@ -19,12 +61,12 @@ var InsuredController = {
 
             const { page = 1, limit = 10 } = req.query;
 
-            const allInsured = await Insured.find({ policyId: [req.body.policyId] })
+            const allInsured = await Insured.find({ policyId: [policyId] })
                 .limit()
                 .skip((page - 1) * limit)
                 .exec();
 
-            const count = await Insured.countDocuments({ policyId: [req.body.policyId] });
+            const count = await Insured.countDocuments({ policyId: [policyId] });
 
             return res.status(200).json({
                 error: false,

@@ -4,11 +4,58 @@ const Customer = require('../../models/customer/CustomerModel');
 const { addPolicyValidator, updatePolicyValidator, deletePolicyValidator } = require('./Validator');
 
 var PolicyController = {
-    getAllPoliciesOfCustomer: async (req, res) => {
+    getPolicy: async (req, res) => {
         try {
+            const policyId = req.header('id');
+            const customerId = req.header('customerId');
+
             const customer = await Customer.findOne({
                 $and: [
-                    { _id: req.body.customerId },
+                    { _id: customerId },
+                    { userId: req.user._id }
+                ]
+            });
+
+            if (!customer) {
+                throw {
+                    error: true,
+                    message: 'customer not found'
+                };
+            }
+
+            const currentPolicy = await Policy.findOne({
+                $and: [
+                    { _id: policyId },
+                    { customerId: customerId }
+                ]
+            });
+
+            if (!currentPolicy) {
+                throw {
+                    error: true,
+                    message: 'policy not found'
+                };
+            }
+
+            return res.status(200).json({
+                error: false,
+                currentPolicy
+            });
+        }
+        catch (error) {
+            return res.status(404).json({
+                error: error.message ?? error,
+                message: 'not found'
+            });
+        }
+    },
+    getAllPoliciesOfCustomer: async (req, res) => {
+        try {
+            const customerId = req.header('customerId');
+
+            const customer = await Customer.findOne({
+                $and: [
+                    { _id: customerId },
                     { userId: req.user._id }
                 ]
             });
@@ -22,12 +69,12 @@ var PolicyController = {
 
             const { page = 1, limit = 10 } = req.query;
 
-            const allPolicies = await Policy.find({ customerId: req.body.customerId })
+            const allPolicies = await Policy.find({ customerId: customerId })
                 .limit()
                 .skip((page - 1) * limit)
                 .exec();
 
-            const count = await Customer.countDocuments({ customerId: req.body.customerId });
+            const count = await Customer.countDocuments({ customerId: customerId });
 
             return res.status(200).json({
                 error: false,

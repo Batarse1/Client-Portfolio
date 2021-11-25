@@ -2,11 +2,9 @@ const joi = require('joi');
 
 const Validator = {
     getAllInsuredOfPolicyValidator: data => {
-        const validateSchema = joi.object({
-            policyId: joi.string()
-                .pattern(new RegExp(process.env.ID_VALIDATOR))
-                .required(),
-        });
+        const validateSchema = joi.string()
+            .pattern(new RegExp(process.env.ID_VALIDATOR))
+            .required();
 
         return validateSchema.validateAsync(data);
     },

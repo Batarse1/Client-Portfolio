@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useContext, createContext } from 'react';
 import { useLocalStorage } from '../UseLocalStorage/useLocalStorage';
 
-const API_URL = 'http://localhost:8080';
+const API_URL = 'http://localhost:5000';
 
 const authContext = createContext();
 
@@ -98,7 +98,7 @@ function useProvideAuth() {
 
     useEffect(() => {
         const isAuthenticated = async () => {
-            const token = userLocalStorage.token || localStorage.getItem('user')?.token;
+            const token = userLocalStorage?.token || localStorage.getItem('user')?.token;
             try {
                 if (token) {
                     const response = await fetch(`${API_URL}/users/IsAuthenticated`, {

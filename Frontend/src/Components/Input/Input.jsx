@@ -1,6 +1,6 @@
 import styles from './Input.module.scss';
 
-function Input({ title, type, id, name, onChange, message, ...rest }) {
+function Input({ title, type, id, name, onChange, message,...rest }) {
 
     return (
         <div className={styles.background}>

@@ -1,47 +1,54 @@
 @import "../../Abstracts/Variables/Variables.scss";
 
-.personalInformation {
+.policyInformation {
+    width: 100%;
+
     padding: 48px 0px;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-
     color: $primary-text;
-    background-color: $white;
     text-decoration: none;
     text-align: center;
     font-family: "Open Sans", sans-serif; 
     font-size: 20px;
-
-    .primaryInformation {
-        width:100%;
-        display: flex;
-        justify-content: space-around;
-        align-items: flex-start;
-    }
-
-    .primaryInformationContent{
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 24px;
-    }
 
     .title {
         font-size: 24px;
         font-weight: 700;
         margin-bottom: 10px;                
     }
-    
-    .subtitle{
-        font-weight: 600;
-        margin-bottom: 10px;
+
+    .policyWrapper {
+        padding: 48px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 10px;
+
+        .policyColumn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+
+            .subtitle {
+                font-weight: 600;
+                margin-bottom: 10px;
+            }
+        }
     }
+}
+.firstLine{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: $primary-text;
+    font-size: 24px;
+    font-weight: 500;
+    font-family: "Open Sans", sans-serif;
+
+    padding: 5px 20px;
+    border-bottom:1px solid black;
 }
 .item {
     display: flex;
@@ -70,19 +77,6 @@
 }
 .icon:active {
     color: black;
-}
-.firstLine{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    color: $primary-text;
-    font-size: 24px;
-    font-weight: 500;
-    font-family: "Open Sans", sans-serif;
-
-    padding: 5px 20px;
-    border-bottom:1px solid black;
 }
 .message {
     position: absolute;

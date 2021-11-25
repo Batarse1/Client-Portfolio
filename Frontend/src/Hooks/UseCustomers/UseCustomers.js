@@ -3,7 +3,7 @@ import React, { useCallback, createContext, useContext } from 'react';
 import { useAuth } from '../UseAuth/useAuth';
 import { useInsuranceCarrier } from '../UseInsuranceCarrier/useInsuranceCarrier';
 
-const API_URL = 'http://localhost:8080';
+const API_URL = 'http://localhost:5000';
 
 const customersContext = createContext();
 
