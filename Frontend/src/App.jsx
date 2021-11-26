@@ -26,6 +26,8 @@ import CreateInsured from "./Pages/CreateInsured/CreateInsured";
 import EditInsured from "./Pages/EditInsured/EditInsured";
 import ReadInsured from "./Pages/ReadInsured/ReadInsured";
 
+import Report from "./Pages/Report/Report";
+
 function App() {
   return (
     <ProvideAuth>
@@ -141,7 +143,9 @@ function App() {
                     path="/report"
                     element={
                       <PrivateRoute>
-                        <PageLayout />
+                        <PageLayout>
+                          <Report />
+                        </PageLayout>
                       </PrivateRoute>
                     } />
                   <Route

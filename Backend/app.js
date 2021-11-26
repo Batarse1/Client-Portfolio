@@ -24,11 +24,13 @@ const userRoutes = require('./routes/user/UserRoutes');
 const customerRoutes = require('./routes/customer/CustomerRoutes');
 const policyRoutes = require('./routes/policy/PolicyRoutes');
 const insuredRoutes = require('./routes/insured/InsuredRoutes');
+const reportRoutes = require('./routes/report/ReportRoutes');
 
 app.use('/users', userRoutes);
 app.use('/customers', customerRoutes);
 app.use('/policies', policyRoutes);
 app.use('/insured', insuredRoutes);
+app.use('/report', reportRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
