@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useContext, createContext } from 'react';
 import { useLocalStorage } from '../UseLocalStorage/useLocalStorage';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'http://192.168.1.29:5000';
 
 const authContext = createContext();
 

@@ -2,7 +2,7 @@ import React, { createContext, useContext } from 'react';
 
 import { useAuth } from '../UseAuth/useAuth';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'http://192.168.1.29:5000';
 
 const policiesContext = createContext();
 
